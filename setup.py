@@ -17,7 +17,7 @@ setup(
         'Programming Language :: Python :: 3.7'
     ],
     keywords='nuamo project name nlp',
-    py_modules=['nuamo'],
+    packages=['nuamo'],
     install_requires=[
         'requests'
     ],
