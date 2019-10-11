@@ -26,3 +26,30 @@ Call via the `nuamo` command like:
 ```bash
 nuamo --word-count 4 --char-lengths 5 --max-results 30000 --min-results 100 --search-delay 2
 ```
+
+This will output a series of potential project names like the following:
+
+```
+=== Project Names ===
+dloah - 19200
+bwaeh - 8010
+pwuib - 1560
+kwoah - 11100
+```
+
+Alternatively, you can condition the words with a dataset via `--train-text TEXT_FILE`:
+
+```bash
+curl https://raw.githubusercontent.com/9b/heavy_pint/master/lists/business-names.txt | strings > business-names.txt
+nuamo --train-text business-names.txt --word-count 4 --char-lengths 5-9 --max-results 30000 --min-results 100 --search-delay 2
+```
+
+This outputs something like the following:
+
+```
+=== Project Names ===
+Sealty - 19900
+Friselli - 29900
+Grofine - 1880
+Prionita - 1950
+```
