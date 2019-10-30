@@ -27,7 +27,7 @@ def load_model(args):
 
 def generate_words(model, searcher, args):
     while True:
-        test_word = model.create_word(random.choice(args.char_lengths))
+        test_word = model.create_word(random.choice(args.char_lengths), args.stem)
         if args.no_search:
             yield test_word, None
         else:
@@ -49,6 +49,7 @@ def main():
     parser.add_argument('-n', '--min-results', type=int, default=100, help='Min search results for a valid name')
     parser.add_argument('-d', '--search-delay', type=float, default=2.0, help='Delay between searches to prevent captcha')
     parser.add_argument('-q', '--quiet', action='store_true', help='Only output project name info')
+    parser.add_argument('-s', '--stem', help='Stem for word to use')
     parser.add_argument('--no-search', action='store_true', help='Skip calculating search results')
     args = parser.parse_args()
 

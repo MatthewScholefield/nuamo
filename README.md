@@ -53,3 +53,5 @@ Friselli - 29900
 Grofine - 1880
 Prionita - 1950
 ```
+
+You can also specify the start of the name with the `--stem STEM` flag.

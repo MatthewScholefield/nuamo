@@ -35,15 +35,20 @@ class CharModel:
             dist['$'] = dist.get('$', 0) + 1
         return cls(chain, lookback, words)
 
-    def create_word(self, word_len):
+    def create_word(self, word_len, stem=''):
         while True:
-            word = self._create_word(word_len)
+            word = self._create_word(word_len, stem)
             if word not in self.real_words and abs(word_len - len(word)) < 4:
                 return word
 
-    def _create_word(self, word_len):
+    def _create_word(self, word_len, stem=''):
         hist = ('^',) * self.lookback
         word = ''
+        for c in stem:
+            word += c
+            hist = (hist + (c,))[-self.lookback:]
+            if hist not in self.chain:
+                raise ValueError('Stem not in language model: ' + word)
         while True:
             dist = self.chain[hist]
             if '$' in dist:
