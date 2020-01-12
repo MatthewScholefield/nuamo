@@ -56,7 +56,12 @@ def main():
     model = load_model(args)
     searcher = GoogleSearcher(args.search_delay)
 
-    words = [word for word, _ in zip(generate_words(model, searcher, args), range(args.word_count))]
+    words = []
+    try:
+        for word, _ in zip(generate_words(model, searcher, args), range(args.word_count)):
+            words.append(word)
+    except KeyboardInterrupt:
+        pass
 
     if not args.quiet:
         print()
