@@ -12,7 +12,7 @@ class GoogleSearcher:
         self.search_delay = search_delay
         self.params = {"tbs": "li:1"}
         self.headers = {
-            'User-Agent': user_agent or 'Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/59.0'
+            'User-Agent': user_agent or 'Mozilla/5.0 (X11; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0'
         }
         self.next_search_time = time.time()
 
@@ -20,7 +20,7 @@ class GoogleSearcher:
         r = self.search(query)
         if 'No result' in r.text or 'did not match any' in r.text:
             return 0
-        m = re.search(r'id="resultStats">([^<]*)<', r.text)
+        m = re.search(r'bout\s+([0-9,]+)\s+results', r.text)
         if not m:
             print('Unkown response from search engine.')
             return -1
