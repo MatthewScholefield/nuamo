@@ -20,7 +20,7 @@ class GoogleSearcher:
         r = self.search(query)
         if 'No result' in r.text or 'did not match any' in r.text:
             return 0
-        m = re.search(r'bout\s+([0-9,]+)\s+results', r.text)
+        m = re.search(r'[^0-9]([0-9,]+)\s+result', r.text)
         if not m:
             print('Unkown response from search engine.')
             return -1
