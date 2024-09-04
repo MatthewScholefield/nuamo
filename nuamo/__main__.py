@@ -65,8 +65,8 @@ def main():
 
     words = {}  # In Python 3.7+, a dict is sorted by insertion order
     try:
-        for word in generate_words(model, searcher, args, words):
-            words[word] = True
+        for word, results in generate_words(model, searcher, args, words):
+            words[word] = results
             if len(words) >= args.word_count:
                 break
     except KeyboardInterrupt:
@@ -76,7 +76,7 @@ def main():
         print()
         print('=== Project Names ===')
 
-    for word in words:
+    for word, results in words.items():
         if results is None:
             print(word)
         else:
