@@ -25,9 +25,16 @@ def load_model(args):
         return CharModel.from_vowels()
 
 
-def generate_words(model, searcher, args):
+def generate_words(model, searcher, args, existing_words):
+    MAX_GENERATION_ATTEMPTS = 100
     while True:
-        test_word = model.create_word(random.choice(args.char_lengths), args.stem)
+        for _ in range(MAX_GENERATION_ATTEMPTS):
+            test_word = model.create_word(random.choice(args.char_lengths), args.stem)
+            if test_word not in existing_words:
+                break
+        else:
+            print('Could not generate another unique word after', MAX_GENERATION_ATTEMPTS, 'tries')
+            raise SystemExit(1)
         if args.no_search:
             yield test_word, None
         else:
@@ -56,10 +63,12 @@ def main():
     model = load_model(args)
     searcher = GoogleSearcher(args.search_delay)
 
-    words = []
+    words = {}  # In Python 3.7+, a dict is sorted by insertion order
     try:
-        for word, _ in zip(generate_words(model, searcher, args), range(args.word_count)):
-            words.append(word)
+        for word in generate_words(model, searcher, args):
+            words[word] = True
+            if len(words) >= args.word_count:
+                break
     except KeyboardInterrupt:
         pass
 
@@ -67,7 +76,7 @@ def main():
         print()
         print('=== Project Names ===')
 
-    for word, results in words:
+    for word in words:
         if results is None:
             print(word)
         else:
