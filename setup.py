@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='nuamo',
-    version='0.2.5',
+    version='0.2.6',
     description='Tool to generate potential project names',
     url='https://github.com/MatthewScholefield/nuamo',
     author='Matthew Scholefield',

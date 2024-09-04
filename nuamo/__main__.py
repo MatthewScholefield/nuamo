@@ -65,7 +65,7 @@ def main():
 
     words = {}  # In Python 3.7+, a dict is sorted by insertion order
     try:
-        for word in generate_words(model, searcher, args):
+        for word in generate_words(model, searcher, args, words):
             words[word] = True
             if len(words) >= args.word_count:
                 break
